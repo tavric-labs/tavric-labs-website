@@ -1,6 +1,6 @@
 # Contributor guidance
 
-- Read README.md for source provenance, build commands, and the VM deployment runbook.
+- Read README.md for source provenance and local build commands. Deployment configuration lives in deploy/ and scripts/deploy.sh.
 - Keep this a static site with no runtime dependencies. All core content and links must work without JavaScript.
 - Verify project claims against current public repository READMEs. Do not include private repositories, fabricated metrics, or unshipped capabilities.
 - Keep public assets local, and preserve the strict Content Security Policy in deploy/Caddyfile.
