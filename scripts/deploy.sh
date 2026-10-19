@@ -13,6 +13,6 @@ if [[ -n "$(git status --porcelain)" ]]; then
 fi
 ssh "$target" 'install -d -m 755 /opt/tavric-labs/site/releases'
 scp deploy/compose.yaml deploy/Caddyfile "$target:/opt/tavric-labs/"
-tar -C dist -czf - . | ssh "$target" "set -eu; release=/opt/tavric-labs/site/releases/$revision; test ! -e \"\$release\" || { echo 'Release already exists; use rollback instructions to reactivate it.' >&2; exit 1; }; mkdir \"\$release\"; tar -xzf - -C \"\$release\"; test -f \"\$release/index.html\"; cd /opt/tavric-labs/site; ln -s \"releases/$revision\" current.next; mv -Tf current.next current"
-ssh "$target" 'docker compose --project-name tavric-labs --file /opt/tavric-labs/compose.yaml up -d; docker exec workspace-caddy wget -q -O /dev/null http://tavric-labs-web:8080/'
+COPYFILE_DISABLE=1 tar --no-xattrs -C dist -czf - . | ssh "$target" "set -eu; release=/opt/tavric-labs/site/releases/$revision; test ! -e \"\$release\" || { echo 'Release already exists; use rollback instructions to reactivate it.' >&2; exit 1; }; mkdir \"\$release\"; tar -xzf - -C \"\$release\"; test -f \"\$release/index.html\"; cd /opt/tavric-labs/site; ln -s \"releases/$revision\" current.next; mv -Tf current.next current"
+ssh "$target" 'set -eu; docker compose --project-name tavric-labs --file /opt/tavric-labs/compose.yaml up -d --wait --wait-timeout 45; docker exec workspace-caddy wget -q -O /dev/null http://tavric-labs-web:8080/'
 echo "Deployed revision $revision. Edge routing is configured separately; see README.md."
