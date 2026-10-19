@@ -1,0 +1,33 @@
+services:
+  web:
+    image: caddy:2-alpine
+    container_name: tavric-labs-web
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 64m
+    cpus: 0.25
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./site:/srv:ro
+    tmpfs:
+      - /config
+      - /data
+    networks:
+      - workspace
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:8080/]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: '2'
+
+networks:
+  workspace:
+    external: true
+    name: workspace_workspace

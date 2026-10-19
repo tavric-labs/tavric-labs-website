@@ -1,0 +1,14 @@
+# Append to /opt/workspace/Caddyfile. Keep existing sites intact.
+tavric-labs.net {
+    encode zstd gzip
+    reverse_proxy tavric-labs-web:8080
+}
+
+www.tavric-labs.net {
+    redir https://tavric-labs.net{uri} permanent
+}
+
+# Direct-IP preview while DNS propagates. Also useful for origin checks.
+http://103.181.176.61 {
+    reverse_proxy tavric-labs-web:8080
+}
