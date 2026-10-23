@@ -18,6 +18,8 @@
         X-Content-Type-Options nosniff
         Referrer-Policy strict-origin-when-cross-origin
     }
+    # VitePress-style clean URLs: /usage -> usage.html. Directories (MkDocs) fall through to file_server.
+    try_files {path} {path}.html
     file_server
 
     handle_errors {
