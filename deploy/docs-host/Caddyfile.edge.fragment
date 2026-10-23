@@ -1,4 +1,4 @@
-# Append to /opt/workspace/Caddyfile once DNS points here. One block per docs site.
+# Add to the edge Caddyfile once DNS points here. One block per docs site.
 # tls pins the production Let's Encrypt endpoint, like the other sites.
 py-mcp.tavric-labs.net {
     tls {
