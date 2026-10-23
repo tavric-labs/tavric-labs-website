@@ -2,6 +2,7 @@ name: Website
 on:
   push:
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -18,7 +19,7 @@ jobs:
       - run: npm run build
   deploy:
     needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.SITE_DEPLOY_ENABLED == 'true'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.SITE_DEPLOY_ENABLED == 'true'
     runs-on: ubuntu-latest
     environment: website-production
     concurrency:
