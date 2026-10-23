@@ -23,7 +23,8 @@ Layout on the host:
    `/opt/tavric-docs/add-site.sh <name>.tavric-labs.net "$(cat docs-<name>.pub)"`
 4. **Edge:** add a block to the edge Caddy config (see `Caddyfile.edge.fragment`), validate it, then reload Caddy. Add DNS first, or certificate issuance backs off for hours.
 5. **Repo:** set secrets `DOCS_DEPLOY_SSH_KEY` (private key) and `DOCS_DEPLOY_KNOWN_HOSTS` (the host's public key line), variables `DOCS_DEPLOY_HOST`, `DOCS_DEPLOY_USER`, `DOCS_DEPLOY_PORT` and `DOCS_DEPLOY_ENABLED=true`.
-6. **Workflow:** build the site, tar it with `index.html` at the archive root, then on `main`:
+6. **Docs site:** use the shared VitePress theme, [`@tavric-labs/docs-theme`](https://github.com/tavric-labs/docs-theme), so every site looks and behaves the same. Install it from the tag tarball and call `defineDocsConfig()`; its README has the exact setup.
+7. **Workflow:** build the site, tar it with `index.html` at the archive root, then on `main`:
    `ssh -i key <deploy-user>@<host> "publish $GITHUB_SHA" < site.tgz`
    and verify `https://<host>/_deployment.json` reports the commit.
 
