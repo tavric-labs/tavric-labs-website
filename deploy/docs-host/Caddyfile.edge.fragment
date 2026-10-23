@@ -1,0 +1,9 @@
+# Append to /opt/workspace/Caddyfile once DNS points here. One block per docs site.
+# tls pins the production Let's Encrypt endpoint, like the other sites.
+py-mcp.tavric-labs.net {
+    tls {
+        issuer acme https://acme-v02.api.letsencrypt.org/directory
+    }
+    encode zstd gzip
+    reverse_proxy tavric-docs-web:8080
+}

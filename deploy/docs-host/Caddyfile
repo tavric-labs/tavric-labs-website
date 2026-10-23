@@ -1,0 +1,28 @@
+{
+    admin off
+    auto_https off
+}
+
+# One static host for every Tavric Labs docs site. The edge Caddy proxies each
+# docs hostname here with the Host header intact; the site is selected by
+# hostname from /srv/<host>/current (see publish.sh and add-site.sh).
+:8080 {
+    respond /healthz 200
+
+    @invalid not header_regexp Host ^[a-z0-9-]+\.tavric-labs\.net(:[0-9]+)?$
+    respond @invalid 404
+
+    root * /srv/{host}/current
+    encode zstd gzip
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+    }
+    file_server
+
+    handle_errors {
+        @notfound expression {err.status_code} == 404
+        rewrite @notfound /404.html
+        file_server
+    }
+}
