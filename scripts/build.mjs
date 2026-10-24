@@ -7,7 +7,7 @@ const source = path.join(root, 'public');
 const html = await readFile(path.join(source, 'index.html'), 'utf8');
 const ids = new Set([...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]));
 for (const [, target] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-  if (/^https?:/.test(target) || target === '#') continue;
+  if (/^(https?|mailto):/.test(target) || target === '#') continue;
   if (target.startsWith('#')) {
     if (!ids.has(target.slice(1))) throw new Error(`Missing anchor: ${target}`);
   } else {
