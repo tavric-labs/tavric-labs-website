@@ -35,3 +35,16 @@
 .contact-line a:hover{color:var(--blue);border-color:var(--blue)}
 @media(max-width:760px){.header nav a:nth-child(4){display:none}.contact-line{font-size:11px;overflow-wrap:anywhere}}
 @media(min-width:1051px){.contact-grid{grid-template-columns:repeat(3,1fr)}}
+
+.legal{padding-block:64px 90px;max-width:760px}
+.legal h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6vw,68px);letter-spacing:-2.5px;line-height:1.1;margin:0 0 12px}
+.legal h2{font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:-1px;margin:48px 0 12px}
+.legal h3{font-size:15px;font-weight:600;margin:28px 0 8px}
+.legal p,.legal li{font-size:14px;line-height:1.85;color:var(--muted)}
+.legal p{margin:0 0 14px}
+.legal ul{margin:0 0 14px;padding-left:20px}
+.legal strong{color:var(--ink);font-weight:600}
+.legal-updated{font:11px var(--mono);letter-spacing:.3px;margin-bottom:32px!important}
+.legal-link{color:var(--ink);font-weight:600;border-bottom:1px solid var(--line)}
+.legal-link:hover{color:var(--blue);border-color:var(--blue)}
+@media(max-width:760px){.legal{padding-block:40px 60px}.legal h2{font-size:26px}}
