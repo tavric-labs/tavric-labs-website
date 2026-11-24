@@ -16,7 +16,14 @@ jobs:
       - run: node --check public/app.js
       - run: bash -n scripts/deploy.sh
       - run: sh -n deploy/publish.sh
+      - uses: actions/checkout@v4
+        with:
+          repository: tavric-labs/courses
+          path: courses
+      - run: npm run build --prefix courses
       - run: npm run build
+        env:
+          COURSES_DIST: ${{ github.workspace }}/courses/dist
   deploy:
     needs: build
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && vars.SITE_DEPLOY_ENABLED == 'true'
@@ -34,7 +41,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
+      - uses: actions/checkout@v4
+        with:
+          repository: tavric-labs/courses
+          path: courses
+      - run: npm run build --prefix courses
       - run: npm run build
+        env:
+          COURSES_DIST: ${{ github.workspace }}/courses/dist
       - name: Package site
         run: COPYFILE_DISABLE=1 tar -czf "$RUNNER_TEMP/site.tgz" -C dist .
       - name: Configure deployment identity
